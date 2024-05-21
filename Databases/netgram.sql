@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2024 a las 21:17:26
+-- Tiempo de generación: 20-05-2024 a las 22:59:45
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -75,7 +75,7 @@ CREATE TABLE `users` (
   `lastname` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
   `email` varchar(75) NOT NULL,
-  `password` varchar(500) NOT NULL,
+  `user_password` varchar(500) NOT NULL,
   `phone_number` int(11) DEFAULT NULL,
   `bdate` date DEFAULT NULL,
   `profile_picture` blob DEFAULT NULL,
@@ -83,6 +83,14 @@ CREATE TABLE `users` (
   `user_score` int(100) DEFAULT NULL,
   `user_calification` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id_user1`, `name`, `lastname`, `username`, `email`, `user_password`, `phone_number`, `bdate`, `profile_picture`, `admin_type`, `user_score`, `user_calification`) VALUES
+(1, 'alex', 'cil', 'alex97', 'alex@gmail.com', 'pass123', NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'juanpie', 'piepie', '', 'jp@gmail.com', 'pass123', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -151,7 +159,7 @@ ALTER TABLE `user_company`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user1` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user1` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `user_company`
