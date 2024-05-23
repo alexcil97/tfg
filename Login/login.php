@@ -34,12 +34,15 @@ include_once('../Classes/ClassConectionPdo.php');
             <input type="hidden" name="formulario" value="login">
             <!-- aqui termina lo generado con chatGPT -->
             <button type="submit" class="btn btn-primary">Enviar</button>
+            <br>
+            <p>Don't you have an invoice? <a href="../Signin/signin.php">register here</a></p>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

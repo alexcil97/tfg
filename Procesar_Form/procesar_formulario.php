@@ -14,9 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST["formulario"] == "login") {
         $resultados = $conexion->comprobarUsuario($email, $password);
         if ($resultados) {
-            echo "lo has hecho bien en login";
+            header('location:../Home/home.php');
         } else {
-            echo "estás jodido login";
+            header('location:../Login/login.php');
         }
         
     } elseif ($_POST["formulario"] == "signin") {
@@ -26,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conexion->insertarUsuario($name,$lastname,$email,$password);
         $resultados = $conexion->comprobarUsuario($email, $password);
         if ($resultados) {
-            echo "lo has hecho bien en singin";
+            header('location:../Home/home.php');
         } else {
-            echo "estás jodido en singin";
+            header('location:../Singin/singin.php');
         }    } else {
         //devolvera a la pagina de login con un mensaje de error
     }

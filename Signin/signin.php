@@ -48,6 +48,8 @@
               <input type="hidden" name="formulario" value="signin">
               <!-- aqui termina lo generado con chatGPT -->
               <button type="submit" class="btn btn-primary">Registrarse</button>
+              <br>
+              <p>Do you already have an account? <a href="../Login/login.php">login here</a></p>
             </form>
           </div>
         </div>
