@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2024 a las 22:59:45
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Host: 127.0.0.1
+-- Generation Time: May 26, 2024 at 05:38 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,25 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `netgram`
+-- Database: `netgram`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `message_company_company`
+-- Table structure for table `images`
+--
+
+CREATE TABLE `images` (
+  `id_image` int(255) NOT NULL,
+  `image path` varchar(5000) NOT NULL,
+  `image_name` varchar(5000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message_company_company`
 --
 
 CREATE TABLE `message_company_company` (
@@ -38,7 +50,7 @@ CREATE TABLE `message_company_company` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `message_company_user`
+-- Table structure for table `message_company_user`
 --
 
 CREATE TABLE `message_company_user` (
@@ -52,7 +64,7 @@ CREATE TABLE `message_company_user` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `message_user_user`
+-- Table structure for table `message_user_user`
 --
 
 CREATE TABLE `message_user_user` (
@@ -66,7 +78,21 @@ CREATE TABLE `message_user_user` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `users`
+-- Table structure for table `publication`
+--
+
+CREATE TABLE `publication` (
+  `id_user` int(11) NOT NULL,
+  `id_publication` int(255) NOT NULL,
+  `id_image` int(255) NOT NULL,
+  `publication_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `publication_message` varchar(5000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -78,24 +104,16 @@ CREATE TABLE `users` (
   `user_password` varchar(500) NOT NULL,
   `phone_number` int(11) DEFAULT NULL,
   `bdate` date DEFAULT NULL,
-  `profile_picture` blob DEFAULT NULL,
+  `profile_picture_id` int(11) DEFAULT NULL,
   `admin_type` tinyint(1) DEFAULT NULL,
   `user_score` int(100) DEFAULT NULL,
   `user_calification` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `users`
---
-
-INSERT INTO `users` (`id_user1`, `name`, `lastname`, `username`, `email`, `user_password`, `phone_number`, `bdate`, `profile_picture`, `admin_type`, `user_score`, `user_calification`) VALUES
-(1, 'alex', 'cil', 'alex97', 'alex@gmail.com', 'pass123', NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'juanpie', 'piepie', '', 'jp@gmail.com', 'pass123', NULL, NULL, NULL, NULL, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `user_company`
+-- Table structure for table `user_company`
 --
 
 CREATE TABLE `user_company` (
@@ -110,87 +128,117 @@ CREATE TABLE `user_company` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `message_company_company`
+-- Indexes for table `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`id_image`);
+
+--
+-- Indexes for table `message_company_company`
 --
 ALTER TABLE `message_company_company`
-  ADD PRIMARY KEY (`id_company1`,`id_company2`),
-  ADD UNIQUE KEY `id_company1` (`id_company1`,`id_company2`),
-  ADD KEY `id_company2` (`id_company2`);
+  ADD PRIMARY KEY (`id_company1`,`id_company2`,`shipping_date`),
+  ADD UNIQUE KEY `id_company1` (`id_company1`,`id_company2`,`shipping_date`);
 
 --
--- Indices de la tabla `message_company_user`
+-- Indexes for table `message_company_user`
 --
 ALTER TABLE `message_company_user`
   ADD PRIMARY KEY (`id_company1`,`id_user1`,`shipping_date`),
-  ADD UNIQUE KEY `id_company1` (`id_company1`),
-  ADD UNIQUE KEY `id_user1` (`id_user1`);
+  ADD UNIQUE KEY `id_company1` (`id_company1`,`id_user1`,`shipping_date`),
+  ADD KEY `id_user1` (`id_user1`);
 
 --
--- Indices de la tabla `message_user_user`
+-- Indexes for table `message_user_user`
 --
 ALTER TABLE `message_user_user`
   ADD PRIMARY KEY (`id_user1`,`id_user2`,`shipping_date`),
-  ADD UNIQUE KEY `id_user1` (`id_user1`),
-  ADD UNIQUE KEY `id_user2` (`id_user2`);
+  ADD UNIQUE KEY `id_user1` (`id_user1`,`id_user2`,`shipping_date`);
 
 --
--- Indices de la tabla `users`
+-- Indexes for table `publication`
+--
+ALTER TABLE `publication`
+  ADD PRIMARY KEY (`id_user`,`id_publication`,`publication_date`),
+  ADD UNIQUE KEY `id_user` (`id_user`,`id_image`),
+  ADD KEY `id_image` (`id_image`);
+
+--
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user1`),
-  ADD UNIQUE KEY `id_user1` (`id_user1`);
+  ADD UNIQUE KEY `id_user1` (`id_user1`),
+  ADD UNIQUE KEY `profile_picture_id` (`profile_picture_id`);
 
 --
--- Indices de la tabla `user_company`
+-- Indexes for table `user_company`
 --
 ALTER TABLE `user_company`
   ADD PRIMARY KEY (`id_company1`),
   ADD UNIQUE KEY `id_company1` (`id_company1`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `users`
+-- AUTO_INCREMENT for table `images`
+--
+ALTER TABLE `images`
+  MODIFY `id_image` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user1` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user1` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `user_company`
+-- AUTO_INCREMENT for table `user_company`
 --
 ALTER TABLE `user_company`
   MODIFY `id_company1` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `message_company_company`
+-- Constraints for table `message_company_company`
 --
 ALTER TABLE `message_company_company`
-  ADD CONSTRAINT `message_company_company_ibfk_1` FOREIGN KEY (`id_company1`) REFERENCES `user_company` (`id_company1`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `message_company_company_ibfk_2` FOREIGN KEY (`id_company2`) REFERENCES `user_company` (`id_company1`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `message_company_company_ibfk_1` FOREIGN KEY (`id_company1`) REFERENCES `user_company` (`id_company1`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `message_company_user`
+-- Constraints for table `message_company_user`
 --
 ALTER TABLE `message_company_user`
-  ADD CONSTRAINT `message_company_user_ibfk_1` FOREIGN KEY (`id_user1`) REFERENCES `users` (`id_user1`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `message_company_user_ibfk_2` FOREIGN KEY (`id_company1`) REFERENCES `user_company` (`id_company1`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `message_company_user_ibfk_2` FOREIGN KEY (`id_company1`) REFERENCES `user_company` (`id_company1`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `message_company_user_ibfk_3` FOREIGN KEY (`id_user1`) REFERENCES `users` (`id_user1`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `message_user_user`
+-- Constraints for table `message_user_user`
 --
 ALTER TABLE `message_user_user`
-  ADD CONSTRAINT `message_user_user_ibfk_1` FOREIGN KEY (`id_user1`) REFERENCES `users` (`id_user1`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `message_user_user_ibfk_2` FOREIGN KEY (`id_user2`) REFERENCES `users` (`id_user1`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `message_user_user_ibfk_1` FOREIGN KEY (`id_user1`) REFERENCES `users` (`id_user1`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `publication`
+--
+ALTER TABLE `publication`
+  ADD CONSTRAINT `publication_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user1`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `publication_ibfk_2` FOREIGN KEY (`id_image`) REFERENCES `images` (`id_image`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`profile_picture_id`) REFERENCES `images` (`id_image`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
