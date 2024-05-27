@@ -7,20 +7,27 @@
     <title>index</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-    <?php
-    include_once('../head/head.php');
-    ?>
+<?php
+include_once('../head/head.php');
+require_once('../Classes/ClassConectionPdo.php');
+?>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <h1>Home!</h1>
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>Home!</h1>
+            <?php
+            $resultados=$conexion->mostrarImagen(5);
+            ?>
+            <br>
+            <img src="<?php echo "../".$resultados[0]['image_path']; ?>" alt="Imagen" style="width:300px;">
+
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <?php
-    include_once('../footer/footer.php');
-    ?>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<?php
+include_once('../footer/footer.php');
+?>
 
 </html>

@@ -2,6 +2,8 @@
 require_once('../Classes/ClassConectionPdo.php');
 // Verificar si se han enviado datos mediante el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    session_start();
+
     // Recibir los datos del formulario
     $name = isset($_POST['name']) ? $_POST['name'] : '';
     $lastname = isset($_POST['lastname']) ? $_POST['lastname'] : '';
@@ -9,6 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $conexion = new ClassConectionPDO();
 
+    $_SESSION['email']=$email;
+    $_SESSION['password']=$password;
 
 
     if ($_POST["formulario"] == "login") {

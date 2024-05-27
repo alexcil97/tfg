@@ -9,6 +9,7 @@
 </head>
 <?php
 include_once('../head/head.php');
+require_once('../Classes/ClassConectionPdo.php');
 ?>
 
 <div class="container-fluid">
@@ -16,17 +17,18 @@ include_once('../head/head.php');
         <div class="col-12">
             <h1>publication!</h1>
 
-            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post" enctype="multipart/form-data">
-            <input type="file" name="imagen"/>
-            <br><br>
-            <input type="text">
-            <input type="submit" value="Enviar" />
+            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post" enctype="multipart/form-data">
+                <input type="file" name="imagen" />
+                <br><br>
+                <input type="text">
+                <input type="submit" value="Enviar" />
             </form>
 
             <?php
             const DIR_IMAGES = "Img";
 
             if (isset($_FILES['imagen'])) {
+
                 //Nombre original del fichero
                 $file_name = $_FILES['imagen']['name'];
                 //Tamaño del fichero
@@ -54,10 +56,12 @@ include_once('../head/head.php');
                 //Si no hay errores
                 if (empty($errors)) {
                     //IMPORTANTE: se debe comprobar si el directorio existe
-                    if (file_exists("../".DIR_IMAGES)) {
-                        move_uploaded_file($file_tmp, "../".DIR_IMAGES . "/" . $file_name);
+                    if (file_exists("../" . DIR_IMAGES)) {
+                        move_uploaded_file($file_tmp, "../" . DIR_IMAGES . "/" . $file_name);
                         echo "Subida correcta<br/>";
-                        echo "<img src='" . "../".DIR_IMAGES . "/$file_name' width='300'/>";
+                        echo "<img src='" . "../" . DIR_IMAGES . "/$file_name' width='300'/>";
+                        $path= DIR_IMAGES . "/" . $file_name;
+                        $conexion->guardarImagen($path,$file_name);
                     } else {
                         $errors[] = "El directorio '" . DIR_IMAGES . "' no existe";
                     }
